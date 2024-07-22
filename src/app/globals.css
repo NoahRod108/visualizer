@@ -30,6 +30,6 @@ body {
   background-color: theme("colors.system.purple50");
 }
 
-.changed-line-color {
+.change-line-color {
   background-color: theme("colors.system.green50");
 }

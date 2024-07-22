@@ -4,7 +4,7 @@ import { Select } from "@/components/Input/Select";
 import { Slider } from "@/components/Input/Slider";
 import { useSortingAlgorithmContext } from "@/context/visualizer";
 import { SortingAlgorithmType } from "@/lib/types";
-import { algorithmOptions } from "@/lib/utils";
+import { algorithmOptions, generateAnimation } from "@/lib/utils";
 import { useEffect } from "react";
 
 export default function Home() {
@@ -16,15 +16,23 @@ export default function Home() {
     selectedAlgorithm,
     setSelecetedAlgorithm,
     requireReset,
+    resetAnimation,
+    runAnimation,
   } = useSortingAlgorithmContext();
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelecetedAlgorithm(e.target.value as SortingAlgorithmType);
   };
 
-  useEffect(() => {
-    console.log(selectedAlgorithm);
-  }, [selectedAlgorithm]);
+  const handlePlay = () => {
+    if (requireReset) {
+      resetAnimation();
+      return;
+    }
+
+    // Make generation array
+    generateAnimation(selectedAlgorithm, isSorting, arrayToSort, runAnimation);
+  };
 
   return (
     <main className="absolute top-0 h-screen w-screen z-[-2] bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#150229_1px)] bg-[size:40px_40px]">
@@ -51,7 +59,7 @@ export default function Home() {
               />
               <button
                 className="flex items-center justify-center"
-                onClick={() => {}}
+                onClick={handlePlay}
               >
                 {requireReset ? "Reset" : "Start"}
               </button>

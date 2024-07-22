@@ -1,6 +1,6 @@
 "use client";
 
-import { SortingAlgorithmType } from "@/lib/types";
+import { AnimationArrayType, SortingAlgorithmType } from "@/lib/types";
 import { MAX_ANIMATION_SPEED, randomNumber } from "@/lib/utils";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -15,6 +15,8 @@ interface SortingAlgorithmContextType {
   setAnimationSpeed: (speed: number) => void;
   isAnimationComplete: boolean;
   setIsAnimationComplete: (isComplete: boolean) => void;
+  runAnimation: (animations: AnimationArrayType) => void;
+  resetAnimation: () => void;
   requireReset: boolean;
 }
 
@@ -72,7 +74,52 @@ export const SortingAlgorithmProvider = ({
   };
 
   // Run selected algorithm
-  const runAnimation = () => {};
+  const runAnimation = (animations: AnimationArrayType) => {
+    setIsSorting(true);
+
+    const inverseSpeed = (1 / animationSpeed) * 200;
+    const arrayLines = document.getElementsByClassName(
+      "array-line"
+    ) as HTMLCollectionOf<HTMLElement>;
+
+    const updateClassList = (
+      indexes: number[],
+      addClassName: string,
+      removeClassName: string
+    ) => {
+      indexes.forEach((index) => {
+        arrayLines[index].classList.add(addClassName);
+        arrayLines[index].classList.remove(removeClassName);
+      });
+    };
+
+    const updateHeightValue = (
+      lineIndex: number,
+      newHeight: number | undefined
+    ) => {
+      if (newHeight === undefined) return;
+
+      arrayLines[lineIndex].style.height = `${newHeight}px`;
+    };
+
+    animations.forEach((animation, index) => {
+      setTimeout(() => {
+        const [values, isSwap] = animation;
+
+        if (!isSwap) {
+          updateClassList(values, "change-line-color", "default-line-color");
+
+          setTimeout(() => {
+            updateClassList(values, "default-line-color", "change-line-color");
+          }, inverseSpeed);
+        } else {
+          const [lineIndex, newHeight] = values;
+
+          updateHeightValue(lineIndex, newHeight);
+        }
+      }, index * inverseSpeed);
+    });
+  };
 
   // Set values object
   const value = {
@@ -87,6 +134,7 @@ export const SortingAlgorithmProvider = ({
     isAnimationComplete,
     setIsAnimationComplete,
     runAnimation,
+    resetAnimation,
     requireReset,
   };
 
