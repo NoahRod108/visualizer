@@ -15,6 +15,7 @@ interface SortingAlgorithmContextType {
   setAnimationSpeed: (speed: number) => void;
   isAnimationComplete: boolean;
   setIsAnimationComplete: (isComplete: boolean) => void;
+  requireReset: boolean;
 }
 
 // Create the context
@@ -36,6 +37,8 @@ export const SortingAlgorithmProvider = ({
     useState<number>(MAX_ANIMATION_SPEED);
   const [isAnimationComplete, setIsAnimationComplete] =
     useState<boolean>(false);
+
+  const requireReset = isAnimationComplete || isSorting;
 
   useEffect(() => {
     resetAnimation();
@@ -68,6 +71,7 @@ export const SortingAlgorithmProvider = ({
     setIsSorting(false);
   };
 
+  // Run selected algorithm
   const runAnimation = () => {};
 
   // Set values object
@@ -82,6 +86,8 @@ export const SortingAlgorithmProvider = ({
     setAnimationSpeed,
     isAnimationComplete,
     setIsAnimationComplete,
+    runAnimation,
+    requireReset,
   };
 
   return (

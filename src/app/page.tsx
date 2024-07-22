@@ -1,12 +1,30 @@
 "use client";
 
+import { Select } from "@/components/Input/Select";
 import { Slider } from "@/components/Input/Slider";
 import { useSortingAlgorithmContext } from "@/context/visualizer";
+import { SortingAlgorithmType } from "@/lib/types";
+import { algorithmOptions } from "@/lib/utils";
 import { useEffect } from "react";
 
 export default function Home() {
-  const { arrayToSort, isSorting, animationSpeed, setAnimationSpeed } =
-    useSortingAlgorithmContext();
+  const {
+    arrayToSort,
+    isSorting,
+    animationSpeed,
+    setAnimationSpeed,
+    selectedAlgorithm,
+    setSelecetedAlgorithm,
+    requireReset,
+  } = useSortingAlgorithmContext();
+
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelecetedAlgorithm(e.target.value as SortingAlgorithmType);
+  };
+
+  useEffect(() => {
+    console.log(selectedAlgorithm);
+  }, [selectedAlgorithm]);
 
   return (
     <main className="absolute top-0 h-screen w-screen z-[-2] bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#150229_1px)] bg-[size:40px_40px]">
@@ -25,6 +43,18 @@ export default function Home() {
                 value={animationSpeed}
                 handleChange={(e) => setAnimationSpeed(Number(e.target.value))}
               />
+              <Select
+                options={algorithmOptions}
+                defaultValue={selectedAlgorithm}
+                onChange={handleSelectChange}
+                isDisabled={isSorting}
+              />
+              <button
+                className="flex items-center justify-center"
+                onClick={() => {}}
+              >
+                {requireReset ? "Reset" : "Start"}
+              </button>
             </div>
           </div>
 
