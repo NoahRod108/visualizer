@@ -1,5 +1,6 @@
 import { generateBubbleAnimation } from "@/algorithms/bubbleSort";
 import { AnimationArrayType, SortingAlgorithmType } from "./types";
+import { generateMergeAnimation } from "@/algorithms/mergeSort";
 
 export const MIN_ANIMATION_SPEED = 100;
 export const MAX_ANIMATION_SPEED = 400;
@@ -27,6 +28,7 @@ export function generateAnimation(
       break;
     case "merge":
       // generateMergeAnimation
+      generateMergeAnimation(isSorting, array, runAnimation);
       break;
     case "quick":
       // generateQuickAnimation
