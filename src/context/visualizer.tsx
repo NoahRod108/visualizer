@@ -64,16 +64,34 @@ export const SortingAlgorithmProvider = ({
     const containerHeight = window.innerHeight;
     const maxLineHeight = Math.max(containerHeight - 420, 100);
 
+    // Loop through lines and give value
     for (let i = 0; i < numLines; i++) {
-      tempArray.push(randomNumber(35, maxLineHeight));
+      tempArray.push(randomNumber(20, maxLineHeight));
     }
 
     setArraySort(tempArray);
     setIsAnimationComplete(false);
     setIsSorting(false);
+
+    const highestId = window.setTimeout(() => {
+      for (let i = highestId; i >= 0; i--) {
+        window.clearTimeout(i);
+      }
+    }, 0);
+
+    const arrayLines = document.getElementsByClassName(
+      "array-line"
+    ) as HTMLCollectionOf<HTMLElement>;
+
+    setTimeout(() => {
+      for (let i = 0; i < arrayLines.length; i++) {
+        arrayLines[i].classList.remove("change-line-color");
+        arrayLines[i].classList.add("default-line-color");
+      }
+    }, 0);
   };
 
-  // Run selected algorithm
+  // Run selected algorithm animation
   const runAnimation = (animations: AnimationArrayType) => {
     setIsSorting(true);
 

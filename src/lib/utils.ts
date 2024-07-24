@@ -1,9 +1,10 @@
 import { generateBubbleAnimation } from "@/algorithms/bubbleSort";
 import { AnimationArrayType, SortingAlgorithmType } from "./types";
 import { generateMergeAnimation } from "@/algorithms/mergeSort";
+import { generateQuickAnimation } from "@/algorithms/quickSort";
 
-export const MIN_ANIMATION_SPEED = 100;
-export const MAX_ANIMATION_SPEED = 400;
+export const MIN_ANIMATION_SPEED = 50;
+export const MAX_ANIMATION_SPEED = 200;
 
 export function randomNumber(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -32,6 +33,7 @@ export function generateAnimation(
       break;
     case "quick":
       // generateQuickAnimation
+      generateQuickAnimation(isSorting, array, runAnimation);
       break;
     default:
       break;

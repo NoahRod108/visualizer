@@ -22,8 +22,7 @@ export function generateBubbleAnimation(
   if (array.length <= 1) return [];
 
   const animations: AnimationArrayType = [];
-  const tempArray = array.slice();
 
-  runBubbleSort(tempArray, animations);
+  runBubbleSort(array, animations);
   runAnimation(animations);
 }
