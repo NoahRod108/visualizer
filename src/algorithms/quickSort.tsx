@@ -3,17 +3,17 @@ import { AnimationArrayType } from "@/lib/types";
 function partition(
   array: number[],
   begin: number,
-  finish: number,
+  end: number,
   animations: AnimationArrayType
 ) {
   let i = begin;
-  let j = finish + 1;
+  let j = end + 1;
   const condition = true;
   const pivot = array[begin];
 
   while (condition) {
     while (array[++i] <= pivot) {
-      if (i === finish) break;
+      if (i === end) break;
 
       animations.push([[i], false]);
     }
@@ -33,20 +33,22 @@ function partition(
 
   [array[begin], array[j]] = [array[j], array[begin]];
 
+  console.log(j);
   return j;
 }
 
 function runQuickort(
   array: number[],
   begin: number,
-  finish: number,
+  end: number,
   animations: AnimationArrayType
 ) {
-  if (begin < finish) {
-    const part = partition(array, begin, finish, animations);
+  if (begin < end) {
+    console.log(begin, end);
+    const part = partition(array, begin, end, animations);
 
     runQuickort(array, begin, part - 1, animations);
-    runQuickort(array, part + 1, finish, animations);
+    runQuickort(array, part + 1, end, animations);
   }
 }
 

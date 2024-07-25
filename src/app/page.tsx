@@ -5,7 +5,6 @@ import { Slider } from "@/components/Input/Slider";
 import { useSortingAlgorithmContext } from "@/context/visualizer";
 import { SortingAlgorithmType } from "@/lib/types";
 import { algorithmOptions, generateAnimation } from "@/lib/utils";
-import { useEffect } from "react";
 
 export default function Home() {
   const {
