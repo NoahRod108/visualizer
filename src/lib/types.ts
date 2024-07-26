@@ -1,9 +1,6 @@
-export type SortingAlgorithmType =
-  | "bubble"
-  | "insertion"
-  | "selection"
-  | "merge"
-  | "quick";
+export type SortingAlgorithmType = "bubble" | "selection" | "merge" | "quick";
+
+export type SelectAlgorithmVisualType = "graph" | "blocks";
 
 export type SelectOptionsType = {
   value: string;

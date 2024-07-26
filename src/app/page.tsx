@@ -3,8 +3,12 @@
 import { Select } from "@/components/Input/Select";
 import { Slider } from "@/components/Input/Slider";
 import { useSortingAlgorithmContext } from "@/context/visualizer";
-import { SortingAlgorithmType } from "@/lib/types";
-import { algorithmOptions, generateAnimation } from "@/lib/utils";
+import { SortingAlgorithmType, SelectAlgorithmVisualType } from "@/lib/types";
+import {
+  algorithmOptions,
+  algorithmVisualOptions,
+  generateAnimation,
+} from "@/lib/utils";
 import { useEffect } from "react";
 
 export default function Home() {
@@ -15,6 +19,8 @@ export default function Home() {
     setAnimationSpeed,
     selectedAlgorithm,
     setSelecetedAlgorithm,
+    selectedVisual,
+    setSelectedVisual,
     requireReset,
     resetAnimation,
     runAnimation,
@@ -22,6 +28,12 @@ export default function Home() {
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelecetedAlgorithm(e.target.value as SortingAlgorithmType);
+  };
+
+  const handleSelectVisualChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setSelectedVisual(e.target.value as SelectAlgorithmVisualType);
   };
 
   const handlePlay = () => {
@@ -57,6 +69,11 @@ export default function Home() {
                 onChange={handleSelectChange}
                 isDisabled={isSorting}
               />
+              <Select
+                options={algorithmVisualOptions}
+                defaultValue={selectedVisual}
+                onChange={handleSelectVisualChange}
+              />
               <button
                 className="flex items-center justify-center"
                 onClick={handlePlay}
@@ -67,14 +84,23 @@ export default function Home() {
           </div>
 
           <div className="relative h-[calc(100vh-66px)] w-full">
-            <div className="absolute bottom-[32px] w-full mx-auto left-0 right-0 flex justify-center items-end">
-              {arrayToSort.map((value, index) => (
-                <div
-                  key={index}
-                  className="array-line relative w-1 mx-0.5 shadow-lg opacity-70 rounded-lg default-line-color"
-                  style={{ height: `${value}px` }}
-                ></div>
-              ))}
+            <div className="absolute bottom-[32px] w-full mx-auto left-0 right-0 flex justify-center items-end flex-wrap">
+              {arrayToSort.map((value, index) =>
+                selectedVisual === "graph" ? (
+                  <div
+                    key={index}
+                    className="array-line relative w-1 mx-0.5 shadow-lg opacity-70 rounded-lg default-line-color"
+                    style={{ height: `${value}px` }}
+                  ></div>
+                ) : (
+                  <div
+                    key={index}
+                    className="flex justify-center array-line w-1 m-1 py-4 px-8 border shadow-lg opacity-70 rounded-lg default-line-color"
+                  >
+                    {value}
+                  </div>
+                )
+              )}
             </div>
           </div>
         </div>

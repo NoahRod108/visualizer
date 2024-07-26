@@ -16,6 +16,11 @@ export const algorithmOptions = [
   { label: "Merge", value: "merge" },
 ];
 
+export const algorithmVisualOptions = [
+  { label: "Graph", value: "graph" },
+  { label: "Blocks", value: "blocks" },
+];
+
 export function generateAnimation(
   selectedAlgorithm: SortingAlgorithmType,
   isSorting: boolean,

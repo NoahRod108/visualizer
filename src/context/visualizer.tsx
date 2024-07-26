@@ -1,6 +1,10 @@
 "use client";
 
-import { AnimationArrayType, SortingAlgorithmType } from "@/lib/types";
+import {
+  AnimationArrayType,
+  SelectAlgorithmVisualType,
+  SortingAlgorithmType,
+} from "@/lib/types";
 import { MAX_ANIMATION_SPEED, randomNumber } from "@/lib/utils";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -9,6 +13,8 @@ interface SortingAlgorithmContextType {
   setArraySort: (array: number[]) => void;
   selectedAlgorithm: SortingAlgorithmType;
   setSelecetedAlgorithm: (algorithm: SortingAlgorithmType) => void;
+  selectedVisual: SelectAlgorithmVisualType;
+  setSelectedVisual: (visual: SelectAlgorithmVisualType) => void;
   isSorting: boolean;
   setIsSorting: (isSorting: boolean) => void;
   animationSpeed: number;
@@ -34,6 +40,8 @@ export const SortingAlgorithmProvider = ({
   const [arrayToSort, setArraySort] = useState<number[]>([]);
   const [selectedAlgorithm, setSelecetedAlgorithm] =
     useState<SortingAlgorithmType>("bubble");
+  const [selectedVisual, setSelectedVisual] =
+    useState<SelectAlgorithmVisualType>("graph");
   const [isSorting, setIsSorting] = useState<boolean>(false);
   const [animationSpeed, setAnimationSpeed] =
     useState<number>(MAX_ANIMATION_SPEED);
@@ -133,7 +141,9 @@ export const SortingAlgorithmProvider = ({
         } else {
           const [lineIndex, newHeight] = values;
 
-          updateHeightValue(lineIndex, newHeight);
+          selectedVisual === "graph"
+            ? updateHeightValue(lineIndex, newHeight)
+            : updateHeightValue(lineIndex, undefined);
         }
       }, index * inverseSpeed);
     });
@@ -145,6 +155,8 @@ export const SortingAlgorithmProvider = ({
     setArraySort,
     selectedAlgorithm,
     setSelecetedAlgorithm,
+    selectedVisual,
+    setSelectedVisual,
     isSorting,
     setIsSorting,
     animationSpeed,

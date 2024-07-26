@@ -7,6 +7,7 @@ function runBubbleSort(array: number[], animations: AnimationArrayType) {
       if (array[j] > array[j + 1]) {
         animations.push([[j, array[j + 1]], true]);
         animations.push([[j + 1, array[j]], true]);
+
         [[array[j], array[j + 1]]] = [[array[j + 1], array[j]]];
       }
     }
