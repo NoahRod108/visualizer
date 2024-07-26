@@ -60,7 +60,6 @@ function runMergeSort(array: number[]) {
     }
   }
 
-  console.log(animations);
   return animations;
 }
 
