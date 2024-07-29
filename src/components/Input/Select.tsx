@@ -12,7 +12,7 @@ export const Select = ({
   isDisabled?: boolean;
 }) => {
   return (
-    <div className="w-48">
+    <div>
       <select
         defaultValue={defaultValue}
         onChange={onChange}

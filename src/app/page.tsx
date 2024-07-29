@@ -1,106 +1,37 @@
 "use client";
 
-import { Select } from "@/components/Input/Select";
-import { Slider } from "@/components/Input/Slider";
 import { useSortingAlgorithmContext } from "@/context/visualizer";
-import { SortingAlgorithmType, SelectAlgorithmVisualType } from "@/lib/types";
-import {
-  algorithmOptions,
-  algorithmVisualOptions,
-  generateAnimation,
-} from "@/lib/utils";
-import { useEffect } from "react";
 
 export default function Home() {
-  const {
-    arrayToSort,
-    isSorting,
-    animationSpeed,
-    setAnimationSpeed,
-    selectedAlgorithm,
-    setSelecetedAlgorithm,
-    selectedVisual,
-    setSelectedVisual,
-    requireReset,
-    resetAnimation,
-    runAnimation,
-  } = useSortingAlgorithmContext();
-
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelecetedAlgorithm(e.target.value as SortingAlgorithmType);
-  };
-
-  const handleSelectVisualChange = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setSelectedVisual(e.target.value as SelectAlgorithmVisualType);
-  };
-
-  const handlePlay = () => {
-    if (requireReset) {
-      resetAnimation();
-      return;
-    }
-
-    // Make generation array
-    generateAnimation(selectedAlgorithm, isSorting, arrayToSort, runAnimation);
-  };
+  const { arrayToSort, selectedVisual } = useSortingAlgorithmContext();
 
   return (
     <main className="absolute top-0 h-screen w-screen z-[-2] bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#150229_1px)] bg-[size:40px_40px]">
-      <div className="flex h-full justify-center">
-        <div
-          id="content-container"
-          className="flex max-w-[1020px] w-full flex-col lg:px-0 px-4"
-        >
-          <div className="h-[166px] relative flex items-center justify-between w-full">
-            <h1 className="text-gray-300 text-2xl font-light hidden md:flex">
-              Visualizer
-            </h1>
-            <div className="flex items-center justify-center gap-4">
-              <Slider
-                isDisabled={isSorting}
-                value={animationSpeed}
-                handleChange={(e) => setAnimationSpeed(Number(e.target.value))}
-              />
-              <Select
-                options={algorithmOptions}
-                defaultValue={selectedAlgorithm}
-                onChange={handleSelectChange}
-                isDisabled={isSorting}
-              />
-              <Select
-                options={algorithmVisualOptions}
-                defaultValue={selectedVisual}
-                onChange={handleSelectVisualChange}
-              />
-              <button
-                className="flex items-center justify-center"
-                onClick={handlePlay}
-              >
-                {requireReset ? "Reset" : "Start"}
-              </button>
-            </div>
-          </div>
-
-          <div className="relative h-[calc(100vh-66px)] w-full">
-            <div className="absolute bottom-[32px] w-full mx-auto left-0 right-0 flex justify-center items-end flex-wrap">
-              {arrayToSort.map((value, index) =>
-                selectedVisual === "graph" ? (
-                  <div
-                    key={index}
-                    className="array-line relative w-1 mx-0.5 shadow-lg opacity-70 rounded-lg default-line-color"
-                    style={{ height: `${value}px` }}
-                  ></div>
-                ) : (
-                  <div
-                    key={index}
-                    className="flex justify-center array-line w-1 m-1 py-4 px-8 border shadow-lg opacity-70 rounded-lg default-line-color"
-                  >
-                    {value}
-                  </div>
-                )
-              )}
+      <div className="container-xl lg:container m-auto">
+        <div className="flex h-full justify-center">
+          <div
+            id="content-container"
+            className="flex max-w-[1020px] w-full flex-col lg:px-0 px-4"
+          >
+            <div className="relative h-[calc(100vh-66px)] w-full">
+              <div className="absolute bottom-[32px] w-full mx-auto left-0 right-0 flex justify-center items-end flex-wrap">
+                {arrayToSort.map((value, index) =>
+                  selectedVisual === "graph" ? (
+                    <div
+                      key={index}
+                      className="array-line relative w-1 mx-0.5 shadow-lg opacity-70 rounded-lg default-line-color"
+                      style={{ height: `${value}px` }}
+                    ></div>
+                  ) : (
+                    <div
+                      key={index}
+                      className="flex justify-center array-line w-1 m-1 py-4 px-8 border shadow-lg opacity-70 rounded-lg default-line-color"
+                    >
+                      {value}
+                    </div>
+                  )
+                )}
+              </div>
             </div>
           </div>
         </div>
